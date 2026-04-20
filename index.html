@@ -1,4 +1,5 @@
-   <!DOCTYPE html>
+   <body>
+  <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -185,6 +186,10 @@
                             class="px-7 py-4 text-sm font-semibold rounded-3xl border border-gray-200 hover:border-[#00b4d8]">
                         Anaboliticos
                     </button>
+                  <button onclick="filtrarPorCategoria('Diversos')" id="cat-suplementos"
+                            class="px-7 py-4 text-sm font-semibold rounded-3xl border border-gray-200 hover:border-[#00b4d8]">
+                        Diversos
+                  </button>
                 </div>
 
                 <select onchange="ordenarProdutos(this.value)" class="bg-white border border-gray-200 rounded-3xl px-6 py-4 text-sm font-medium">
@@ -285,7 +290,7 @@
                     </div>
                     <button onclick="enviarCotacao()" 
                             class="mt-6 w-full py-7 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-3xl text-2xl font-semibold">
-                        Enviar cotação pelo WhatsApp 📲
+                        Enviar seu pedido pelo WhatsApp 📲
                     </button>
                 </div>
             </div>
@@ -351,7 +356,7 @@
                 desc: "GHK-Cu (50mg) BPC-157 (10mg) TB-500 (10mg) KPV (10mg) É uma mistura de peptídeos injetáveis focada no rejuvenescimento profundo regeneração celular melhora da firmezaelasticidade da pele e redução da inflamação  Combinando três poderosos agentes é utilizado para reparação tecidual cicatrização e saúde capilar.",
                 detalhes: "Uso semanal. injetavel.",
                 img: "https://elev8peptides.com/cdn/shop/files/glow_bda49d64-e233-4736-9820-ba2ad9af6b91.png?v=1765813231&width=770",
-                 variante:[
+                 variantes:[
                    { mg: "70 mg Caneta - Oxygen", preco: 3339},
                    { mg: "70 mg Liofilizado - Oxygen", preco: 2700},
                    { mg: "70 mg Liofilizado - Formula", preco: 2046},
@@ -366,9 +371,9 @@
                 desc: "A tesamorelina é um peptídeo sintético, análogo do hormônio liberador do hormônio do crescimento (GHRH), que estimula a produção natural de GH, focando na redução de gordura visceral (abdominal)",
                 detalhes: "Injetavel. Uso semanal.",
                 img: "https://cellpept.eu/wp-content/uploads/2025/10/33.-tesamorelin-10mg-mockup-600x600.webp",
-              variante: [
+              variantes: [
                 {mg: "10 mg Ampola - Oxygen", preco: 2385},
-                {mg: " 5 mg Ampola - Zepra", preco: 1669}
+                {mg: "5 mg Ampola - Zepra", preco: 1669}
               ]
             },
             {
@@ -390,12 +395,12 @@
                 id: 7,
                 nome: "Klow",
                 categoria: "Peptideo",
-                preco: 2226,
+                preco: 1830,
                 desc: "GHK-Cu (50mg) BPC-157 (10mg) TB-500 (10mg) KPV (10mg) É uma combinação avançada de peptídeos focada na regeneração tecidual, redução intensa de inflamação e rejuvenescimento. Essa mistura atua na cicatrização de lesões, saúde da pele (colágeno/elastina) e pode apoiar a saúde capilar, sendo popularmente usada para recuperação.",
                 detalhes: "Uso semanal.",
                 img: "https://www.vitaminasbrasil.com/upload/produto/imagem/18de6c60627d3eeda2009134b07df659.webp",
               variantes: [
-                { mg: "80 mg Liofilizado - Zeptra", preco: 2385 },
+                { mg: "80 mg Liofilizado - Zeptra", preco: 1830 },
                 { mg: "80 mg Liofiulizado - Freedom", preco: 2226}
               ]
             },
@@ -450,7 +455,7 @@
               id: 11,
                 nome: "Deca",
                 categoria: "Anaboliticos",
-                preco: 10.10,
+                preco: 278,
                 desc: "A ipamorelina é um peptídeo sintético que pertence à classe dos secretagogos do hormônio do crescimento (GHS). Ela atua mimetizando a ação da grelina no cérebro, estimulando a glândula hipófise a liberar o hormônio do crescimento (GH) de forma pulsátil e fisiológica.",
                 detalhes: "Uso semanal. injetavel.",
                 img: "https://chutamax.com/wp-content/uploads/2024/04/lander-decala.webp"
@@ -459,19 +464,19 @@
             id: 12,
                 nome: "Durateston",
                 categoria: "Anaboliticos",
-                preco: 10.10,
+                preco: 402,
                 desc: "A ipamorelina é um peptídeo sintético que pertence à classe dos secretagogos do hormônio do crescimento (GHS). Ela atua mimetizando a ação da grelina no cérebro, estimulando a glândula hipófise a liberar o hormônio do crescimento (GH) de forma pulsátil e fisiológica.",
                 detalhes: "Uso semanal. injetavel.",
                 img: "https://i0.wp.com/hmcmax.com/wp-content/uploads/2025/01/durateston_plus-_smart_suplementos-1.jpg.webp?fit=487%2C520&ssl=1"
           },
           {
           id: 13,
-          nome: "Dianabol",
-          categoria: "Anaboliticos",  
-          preco: 10.10,
-          desc: "te deixa bem grande",
-          detalhes: "uso iinjetavel",
-          img:"https://regionalfarma.com.br/wp-content/uploads/2021/11/Captura-de-Tela-2021-11-15-a%CC%80s-13.54.42-300x296.png"
+          nome: "PT - 141 10mg",
+          categoria: "Peotideo",  
+          preco: 1176,
+          desc: "O PT-141, também conhecido pelo nome genérico bremelanotida, é um peptídeo sintético utilizado para tratar a disfunção sexual em homens e mulheres. Diferente de medicamentos populares como o Viagra ou Cialis, que focam no fluxo sanguíneo periférico, o PT-141 atua diretamente no sistema nervoso central para estimular o desejo sexual",
+          detalhes: " Lab - Oxygen uso iinjetavel",
+          img:"https://biotechpeptides.com/wp-content/uploads/2020/04/PT-141-10MG-1.webp"
           },
            {
           id: 14,
@@ -500,7 +505,7 @@ img:"https://d2xsxph8kpxj0f.cloudfront.net/310419663029581289/5DdYFHJLZQUemYaFCc
           nome: "HGH 25 mg Fragmento 176 - 191AA",
           categoria: "Peptideo",  
           preco: 5565,
-          desc: "É um medicamento de alto potencial para tratamento da obesidade e diabetes tipo 2, com perdas de peso significativas (até 24-28%). Ela atua como um agonista triplo, estimulando receptores de GLP-1, GIP e glucagon, reduzindo o apetite e aumentando o gasto energético.",
+          desc: "Descrição do Peptídeo O HGH Fragment 176-191 é uma versão sintética e modificada da molécula do hormônio do crescimento humano (GH). Diferente do hormônio completo, este peptídeo foca exclusivamente na perda de gordura, isolando a parte da molécula responsável pelo metabolismo lipídico",
           detalhes: " kit com 5 Ampolas ",
 img:"https://www.usada.org/wp-content/uploads/hgh-post.jpg"
           },
@@ -907,10 +912,6 @@ function limparCarrinho() {
 }
     </script>
 </body>
-</html>
-    
-  </body>
-  
 </html>
     
   </body>
