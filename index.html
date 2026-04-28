@@ -1,4 +1,15 @@
-   <body>
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>ataualizar</title>
+    
+
+  </head>
+    
+  <body>
+  <body>
   <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -536,13 +547,12 @@ img:"https://www.usada.org/wp-content/uploads/hgh-post.jpg"
                         
                        <div class="flex justify-between items-end mt-8">
     <div>
-        <span class="text-xs text-gray-400">A partir de</span>
-        <div class="text-3xl font-semibold text-[#00b4d8]">R$ ${prod.preco.toFixed(2)}</div>
+        <span class="text-xs text-[#00b4d8] font-medium bg-[#00b4d8]/10 px-3 py-1 rounded-full">🔒 Selecione para ver o preço</span>
     </div>
     
     <!-- Emoji de Carrinho -->
     <button 
-        onclick="event.stopImmediatePropagation(); adicionarAoCarrinho(produtos.find(p => p.id === ${prod.id}))" 
+        onclick="event.stopImmediatePropagation(); abrirModalProduto(${prod.id})" 
         class="text-4xl hover:scale-125 transition-transform p-3">
         🛒
     </button>
@@ -608,7 +618,6 @@ img:"https://www.usada.org/wp-content/uploads/hgh-post.jpg"
                     data-index="${index}" 
                     class="variante-btn py-3 px-4 border-2 border-gray-200 rounded-2xl text-sm font-medium hover:border-[#00b4d8] transition-all flex flex-col items-center">
                 <span class="font-semibold">${variante.mg}</span>
-                <span class="text-[#00b4d8] text-base mt-1">R$ ${variante.preco.toFixed(2)}</span>
             </button>
         `).join('')
 
@@ -633,9 +642,9 @@ img:"https://www.usada.org/wp-content/uploads/hgh-post.jpg"
 
     document.getElementById('modalDescricao').innerHTML = conteudoHTML
 
-    // Atualiza o preço inicial (primeira variante ou preço padrão)
+    // Oculta o preço até o usuário selecionar uma variante
     if (prod.variantes && prod.variantes.length > 0) {
-        document.getElementById('modalPreco').innerHTML = `R$ <span class="text-5xl">${prod.variantes[0].preco.toFixed(2)}</span>`
+        document.getElementById('modalPreco').innerHTML = `<span class="text-2xl text-gray-400 italic">👆 Selecione uma dosagem para ver o preço</span>`
     } else {
         document.getElementById('modalPreco').innerHTML = `R$ <span class="text-5xl">${prod.preco.toFixed(2)}</span>`
     }
@@ -644,8 +653,7 @@ img:"https://www.usada.org/wp-content/uploads/hgh-post.jpg"
     setTimeout(() => {
         const buttons = document.querySelectorAll('.variante-btn')
         if (buttons.length > 0) {
-            // Seleciona a primeira variante por padrão
-            buttons[0].classList.add('active', 'border-[#00b4d8]', 'bg-[#00b4d8]/10')
+            // NÃO seleciona nenhuma variante por padrão — usuário precisa escolher
 
             buttons.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -657,7 +665,7 @@ img:"https://www.usada.org/wp-content/uploads/hgh-post.jpg"
                     // Ativa o clicado
                     btn.classList.add('active', 'border-[#00b4d8]', 'bg-[#00b4d8]/10')
 
-                    // Atualiza o preço no modal
+                    // Revela e atualiza o preço no modal
                     document.getElementById('modalPreco').innerHTML = `R$ <span class="text-5xl">${variante.preco.toFixed(2)}</span>`
                 })
             })
@@ -912,6 +920,10 @@ function limparCarrinho() {
 }
     </script>
 </body>
+</html>
+    
+  </body>
+  
 </html>
     
   </body>
