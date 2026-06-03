@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🛋️ Bio-Fit Catálogo - E-commerce de Móveis
 
 ## ⚡ Quick Start (Recomendado para Windows)
