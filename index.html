@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Loja de Móveis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+
+        #product-modal {
+            animation: modal-fade 0.24s ease-out forwards;
+        }
+
+        .modal-card {
+            animation: modal-slide-up 0.28s ease-out forwards;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 24px 80px rgba(0, 0, 0, 0.18);
+        }
+
+        .ad-marquee-container {
+            overflow: hidden;
+        }
+
+        .ad-marquee {
+            display: inline-flex;
+            gap: 3rem;
+            animation: scroll-left 18s linear infinite;
+        }
+
+        .ad-marquee span {
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        .ad-carousel {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ad-carousel-track {
+            display: flex;
+            gap: 1rem;
+            animation: slide-carousel 18s ease-in-out infinite;
+            width: max-content;
+        }
+
+        .ad-carousel-item {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+
+        .ad-carousel-item img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 1.25rem;
+            box-shadow: 0 18px 50px rgba(0,0,0,0.12);
+        }
+
+        @keyframes slide-carousel {
+            0%, 25% { transform: translateX(0); }
+            33.333%, 58.333% { transform: translateX(-100%); }
+            66.666%, 91.666% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes scroll-left {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+
+        @keyframes modal-fade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modal-slide-up {
+            from { opacity: 0; transform: translateY(24px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        #login-modal {
+            animation: modal-fade 0.24s ease-out forwards;
+        }
+
+        .login-card {
+            animation: modal-slide-up 0.28s ease-out forwards;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 24px 80px rgba(0, 0, 0, 0.18);
+        }
+
+        .login-tab-content {
+            display: none;
+        }
+
+        .login-tab-content.active {
+            display: block;
+        }
+
+        .login-tab-btn {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-tab-btn.active {
+            border-bottom: 2px solid #ea580c;
+            color: #ea580c;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="bg-gray-100 text-center py-2 text-xs font-medium border-b">
+        HA MAIS DE 15 ANOS ATENDENDO VOCÊ CLIENTE 
+    </div>
+
+    <header class="bg-white sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="text-3xl font-black text-red-600 tracking-tighter">
+                Aquidauana<span class="text-gray-400 font-light">Moveis</span>
+            </div>
+
+            <div class="hidden md:flex flex-1 mx-10">
+                <div class="relative w-full">
+                    <input type="text" placeholder="O que você procura hoje?" class="w-full border border-gray-300 rounded-full py-2 px-5 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <button type="button" aria-label="Buscar" class="absolute right-4 top-2 text-gray-400 hover:text-gray-600 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6 text-sm font-semibold">
+                <a href="#" id="login-btn" class="hover:text-orange-600 block">Entrar</a>
+                <button id="profile-btn" type="button" class="hidden inline-flex items-center gap-2 rounded-full border border-orange-600 bg-orange-50 px-4 py-2 text-orange-700 font-semibold hover:bg-orange-100 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Perfil
+                </button>
+                <button type="button" class="relative cursor-pointer text-gray-700 hover:text-orange-600 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        <path d="M16 6H3"></path>
+                    </svg>
+                    <span class="absolute -top-2 -right-2 bg-orange-600 text-white text-[10px] rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+
+        <nav class="bg-white border-t border-gray-100">
+            <div class="container mx-auto px-4 overflow-x-auto">
+                <ul class="flex space-x-8 py-3 text-sm font-bold uppercase tracking-wide whitespace-nowrap">
+                    <li class="border-b-2 border-orange-600 pb-1 cursor-pointer">Cozinhas</li>
+                    <li><a href="https://romariodecanto927-design.github.io/Adm/" target="_blank" class="block hover:text-orange-600">Adm</a></li>
+                    <li class="hover:text-orange-600 cursor-pointer">Sala de Estar</li>
+                    <li><a href="https://wa.me/+556799473285" target="_blank" class="block hover:text-orange-600">Escritório</a></li>
+                    <li><a href="produtos-em-estoque.html" class="block hover:text-orange-600">Produtos em estoque</a></li>
+                    <li class="hover:text-orange-600 cursor-pointer text-red-600">Ofertas%</li>
+                    <li><a href="https://forms.gle/qd7JF1Ux7LE6NHDv7" target="_blank" class="block hover:text-orange-600 text-red-600">Vagas abertas</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="bg-orange-600 text-white py-3 overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="ad-marquee-container rounded-full border border-white/20 bg-orange-600/90 px-4 py-3">
+                <div class="ad-marquee">
+                    <span>Novo showroom aberto em Ivinhema: condições especiais para móveis planejados!</span>
+                    <span>Promoção de inverno: até 30% OFF em móveis de cozinha.</span>
+                    <span>Frete grátis para Campo Grande e região em compras acima de R$ 1.200.</span>
+                    <span>Atendimento exclusivo via WhatsApp: clique e fale com nossa equipe.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative bg-gray-300 h-[400px] md:h-[600px] overflow-hidden">
+        <img src="imagens/Banner Divulgação de Empresa de Decoração e Design de Interiores Elegante e Sofisticado.png" alt="Banner principal" class="w-full h-full object-cover" loading="lazy" />
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 p-8 max-w-lg rounded-lg shadow-xl">
+            <h2 class="text-3xl font-bold mb-2">Cozinha dos Seus Sonhos</h2>
+            <p class="mb-6 text-gray-600">Linha Lux com acabamento premium e 100% MDF.</p>
+            <a href="#" class="bg-red-600 text-white px-8 py-3 rounded font-bold uppercase hover:bg-yellow-700 transition">Compre Agora</a>
+        </div>
+    </section>
+
+    <div class="mx-auto my-6 overflow-hidden rounded-[32px] shadow-2xl">
+        <img src="imagens/Banner Divulgação de Empresa de Decoração e Design de Interiores Elegante e Sofisticado.png" alt="Banner de decoração" class="w-full h-[260px] md:h-[380px] object-cover" loading="lazy" />
+    </div>
+
+    <section class="container mx-auto px-4 py-12 bg-white rounded-[32px] shadow-lg">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+            <div>
+                <p class="text-xs uppercase tracking-widest text-orange-600 font-bold">Em oferta</p>
+                <h2 class="text-3xl font-bold text-gray-900">Produtos em Oferta</h2>
+                <p class="mt-2 text-sm text-gray-500">Confira os itens disponíveis para compra imediata com entrega rápida.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="filter-toggle" type="button" class="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 4h18"></path>
+                        <path d="M6 12h12"></path>
+                        <path d="M10 20h4"></path>
+                        <path d="M4 4l6 8v6l4 2v-8l6-8"></path>
+                    </svg>
+                    Filtrar
+                </button>
+                <a href="#" class="inline-flex items-center justify-center rounded-full border border-orange-600 bg-orange-50 px-6 py-3 text-sm font-semibold text-orange-700 hover:bg-orange-100 transition">Ver todos</a>
+            </div>
+        </div>
+
+        <div id="filter-overlay" class="hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"></div>
+
+        <aside id="filter-panel" class="fixed inset-y-0 right-0 z-50 w-full max-w-sm translate-x-full border-l border-gray-200 bg-white p-6 shadow-2xl transition-transform duration-300 sm:w-[360px]">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-orange-600 font-bold">Filtrar</p>
+                    <h3 class="text-xl font-bold text-gray-900">Refine sua busca</h3>
+                </div>
+                <button id="filter-close" type="button" class="rounded-full bg-gray-100 p-3 text-gray-600 hover:bg-gray-200 transition">✕</button>
+            </div>
+            <div class="space-y-6">
+                <div class="space-y-4">
+                    <p class="text-xs uppercase tracking-widest text-orange-600 font-bold">Categorias</p>
+                    <div class="grid grid-cols-2 gap-3 sm:grid-cols-2">
+                        <label class="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium cursor-pointer">
+                            <input type="checkbox" class="filter-category" value="Cozinha">
+                            Cozinha
+                        </label>
+                        <label class="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium cursor-pointer">
+                            <input type="checkbox" class="filter-category" value="Sala de Estar">
+                            Sala de Estar
+                        </label>
+                        <label class="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium cursor-pointer">
+                            <input type="checkbox" class="filter-category" value="Escritório">
+                            Escritório
+                        </label>
+                        <label class="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium cursor-pointer">
+                            <input type="checkbox" class="filter-category" value="eletrônicos">
+                            Eletrônicos
+                        </label>
+                    </div>
+                     <div class="space-y-4">
+                    <p class="text-xs uppercase tracking-widest text-orange-600 font-bold">Filiais</p>
+                    <div class="grid grid-cols-2 gap-3 sm:grid-cols-2">
+                        <label class="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium cursor-pointer">
+                            <input type="checkbox" class="filter-category" value="bela vista">
+                            bela vista
+                        </label>
+                        <label class="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium cursor-pointer">
+                            <input type="checkbox" class="filter-category" value="aquidauana">
+                            Aquidauana
+                        </label>
+                        <label class="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium cursor-pointer">
+                            <input type="checkbox" class="filter-category" value="ivinhema">
+                            ivinhema
+                        </label>
+                        <label class="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium cursor-pointer">
+                            <input type="checkbox" class="filter-category" value="jardim">
+                            Jardim
+                        </label>
+                    </div>
+                </div>
+                </div>
+
+                <div class="space-y-4">
+                    <p class="text-xs uppercase tracking-widest text-orange-600 font-bold">Preço</p>
+                    <div class="space-y-2">
+                        <label class="inline-flex w-full items-center justify-between rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium cursor-pointer">
+                            <span>Até R$ 700</span>
+                            <input type="radio" name="price-range" class="filter-price" value="0-700">
+                        </label>
+                        <label class="inline-flex w-full items-center justify-between rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium cursor-pointer">
+                            <span>R$ 701 - R$ 1.300</span>
+                            <input type="radio" name="price-range" class="filter-price" value="701-1300">
+                        </label>
+                        <label class="inline-flex w-full items-center justify-between rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium cursor-pointer">
+                            <span>Acima de R$ 1.300</span>
+                            <input type="radio" name="price-range" class="filter-price" value="1301-99999">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:flex-row">
+                    <button id="apply-filters" type="button" class="inline-flex items-center justify-center rounded-full bg-orange-600 px-5 py-3 text-sm font-semibold text-white hover:bg-orange-700 transition">Aplicar</button>
+                    <button id="clear-filters" type="button" class="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition">Limpar</button>
+                </div>
+            </div>
+        </aside>
+
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </section>
+
+    <main class="container mx-auto px-4 py-12">
+        <h2 class="text-2xl font-bold mb-8 flex items-center">
+            <span class="w-8 h-1 bg-orange-600 mr-3"></span>
+            Mais Vendidos
+        </h2>
+
+        <div id="best-sellers-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6 auto-rows-fr"></div>
+    </main>
+
+    <section class="bg-gray-100 py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-orange-600 font-bold">Promoções</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Anúncios em destaque</h2>
+                </div>
+            </div>
+            <div class="ad-carousel">
+                <div class="ad-carousel-track">
+                    <div class="ad-carousel-item">
+                        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80" alt="Promoção de móveis planejados" />
+                    </div>
+                    <div class="ad-carousel-item">
+                        <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1000&q=80" alt="Promoção de sofá com desconto" />
+                    </div>
+                    <div class="ad-carousel-item">
+                        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1000&q=80" alt="Oferta de estante para sala" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto px-4 py-12 bg-white rounded-[32px] shadow-lg mt-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+            <div>
+                <p class="text-xs uppercase tracking-widest text-blue-600 font-bold">Classificados</p>
+                <h2 class="text-3xl font-bold text-gray-900">Eletrônicos em destaque</h2>
+                <p class="mt-2 text-sm text-gray-500">Veja os melhores eletrônicos com ofertas especiais.</p>
+            </div>
+            <a href="#" class="inline-flex items-center justify-center rounded-full border border-blue-600 bg-blue-50 px-6 py-3 text-sm font-semibold text-blue-700 hover:bg-blue-100 transition">Ver todos eletrônicos</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <article class="bg-gray-50 rounded-3xl border border-gray-200 p-5 shadow-sm hover:shadow-lg transition">
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80" alt="Smart TV LED" class="w-full h-44 object-cover rounded-3xl mb-4">
+                <h3 class="font-semibold text-gray-900">Smart TV 55" 4K</h3>
+                <p class="text-sm text-gray-500 mb-3">Tela ampla e som imersivo com controle de voz.</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="font-bold text-blue-600">R$ 2.499,00</span>
+                    <span class="rounded-full bg-blue-100 text-blue-700 px-3 py-1 text-[10px] uppercase font-bold">Eletrônicos</span>
+                </div>
+                <button type="button" data-product-name="Smart TV 55 4K" data-product-price="R$ 2.499,00" data-product-stock="12 unidades" data-product-description="Smart TV 55 4K com imagem cristalina e aplicativos integrados." data-product-image="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80" class="product-detail-button w-full border border-blue-600 text-blue-600 py-2 rounded font-bold text-xs hover:bg-blue-600 hover:text-white transition">VER DETALHES</button>
+            </article>
+            <article class="bg-gray-50 rounded-3xl border border-gray-200 p-5 shadow-sm hover:shadow-lg transition">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=900&q=80" alt="Notebook moderno" class="w-full h-44 object-cover rounded-3xl mb-4">
+                <h3 class="font-semibold text-gray-900">Notebook i7 16GB</h3>
+                <p class="text-sm text-gray-500 mb-3">Desempenho premium para trabalho e entretenimento.</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="font-bold text-blue-600">R$ 3.799,00</span>
+                    <span class="rounded-full bg-blue-100 text-blue-700 px-3 py-1 text-[10px] uppercase font-bold">Eletrônicos</span>
+                </div>
+                <button type="button" data-product-name="Notebook i7 16GB" data-product-price="R$ 3.799,00" data-product-stock="7 unidades" data-product-description="Notebook com processador i7, 16GB de RAM e SSD rápido para seu dia a dia." data-product-image="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=900&q=80" class="product-detail-button w-full border border-blue-600 text-blue-600 py-2 rounded font-bold text-xs hover:bg-blue-600 hover:text-white transition">VER DETALHES</button>
+            </article>
+            <article class="bg-gray-50 rounded-3xl border border-gray-200 p-5 shadow-sm hover:shadow-lg transition">
+                <img src="https://images.unsplash.com/photo-1510557880182-3e2b9f27f4c4?auto=format&fit=crop&w=900&q=80" alt="Fone de ouvido premium" class="w-full h-44 object-cover rounded-3xl mb-4">
+                <h3 class="font-semibold text-gray-900">Fone de Ouvido Bluetooth</h3>
+                <p class="text-sm text-gray-500 mb-3">Áudio com cancelamento de ruído e bateria duradoura.</p>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="font-bold text-blue-600">R$ 499,00</span>
+                    <span class="rounded-full bg-blue-100 text-blue-700 px-3 py-1 text-[10px] uppercase font-bold">Eletrônicos</span>
+                </div>
+                <button type="button" data-product-name="Fone de Ouvido Bluetooth" data-product-price="R$ 499,00" data-product-stock="20 unidades" data-product-description="Fone Bluetooth com som premium, microfone integrado e conforto para horas de uso." data-product-image="https://images.unsplash.com/photo-1510557880182-3e2b9f27f4c4?auto=format&fit=crop&w=900&q=80" class="product-detail-button w-full border border-blue-600 text-blue-600 py-2 rounded font-bold text-xs hover:bg-blue-600 hover:text-white transition">VER DETALHES</button>
+            </article>
+        </div>
+    </section>
+
+    <div id="login-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm px-4 py-8" aria-labelledby="login-title" role="dialog" aria-modal="true">
+        <div class="mx-auto max-w-md rounded-[32px] bg-white overflow-hidden login-card">
+            <div class="flex items-center justify-between border-b border-gray-200 bg-gray-50 p-4">
+                <h2 id="login-title" class="text-xl font-bold text-gray-900">Acessar Conta</h2>
+                <button id="login-close" type="button" class="text-gray-500 hover:text-gray-900 font-bold">✕</button>
+            </div>
+            
+            <div class="flex border-b border-gray-200">
+                <button class="login-tab-btn active flex-1 py-3 text-sm font-semibold border-b-2 border-orange-600" data-tab="customer">Cliente</button>
+                <button class="login-tab-btn flex-1 py-3 text-sm font-semibold text-gray-600" data-tab="admin">Admin</button>
+            </div>
+
+            <div class="p-6">
+                <!-- ABA CLIENTE -->
+                <div id="customer-tab" class="login-tab-content active space-y-4">
+                    <h3 class="font-semibold text-gray-900 mb-4">Login do Cliente</h3>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">E-mail</label>
+                        <input type="email" id="customer-email" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-600" placeholder="seu@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Senha</label>
+                        <input type="password" id="customer-password" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-600" placeholder="••••••••">
+                    </div>
+                    <button class="w-full bg-orange-600 text-white py-2 rounded-lg font-semibold hover:bg-orange-700 transition">Entrar</button>
+                    <p class="text-center text-sm text-gray-600">Não tem conta? <span class="text-orange-600 font-semibold cursor-pointer" id="show-register">Cadastre-se aqui</span></p>
+                </div>
+
+                <!-- ABA CADASTRO -->
+                <div id="register-tab" class="login-tab-content hidden space-y-4">
+                    <h3 class="font-semibold text-gray-900 mb-4">Criar Conta</h3>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
+                        <input type="text" id="register-name" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-600" placeholder="Seu nome">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">E-mail</label>
+                        <input type="email" id="register-email" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-600" placeholder="seu@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Senha</label>
+                        <input type="password" id="register-password" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-600" placeholder="••••••••">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Senha</label>
+                        <input type="password" id="register-password-confirm" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-600" placeholder="••••••••">
+                    </div>
+                    <button class="w-full bg-orange-600 text-white py-2 rounded-lg font-semibold hover:bg-orange-700 transition">Cadastrar</button>
+                    <p class="text-center text-sm text-gray-600">Já tem conta? <span class="text-orange-600 font-semibold cursor-pointer" id="show-login">Faça login</span></p>
+                </div>
+
+                <!-- ABA ADMIN -->
+                <div id="admin-tab" class="login-tab-content hidden space-y-4">
+                    <h3 class="font-semibold text-gray-900 mb-4">Login Administrativo</h3>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+                        <p class="text-sm text-yellow-800">⚠️ Área restrita para administradores da plataforma</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">CPF/CNPJ</label>
+                        <input type="text" id="admin-cpf" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="000.000.000-00">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Senha</label>
+                        <input type="password" id="admin-password" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="••••••••">
+                    </div>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition">Acessar Painel Admin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="profile-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm px-4 py-8" aria-labelledby="profile-title" role="dialog" aria-modal="true">
+        <div class="mx-auto max-w-md rounded-[32px] bg-white overflow-hidden login-card">
+            <div class="flex items-center justify-between border-b border-gray-200 bg-gray-50 p-4">
+                <div>
+                    <h2 id="profile-title" class="text-xl font-bold text-gray-900">Perfil do Cliente</h2>
+                    <p id="profile-subtitle" class="text-sm text-gray-500">Veja e edite suas informações</p>
+                </div>
+                <button id="profile-close" type="button" class="text-gray-500 hover:text-gray-900 font-bold">✕</button>
+            </div>
+            <div class="p-6 space-y-6">
+                <div class="rounded-3xl border border-gray-200 bg-gray-50 p-5">
+                    <p class="text-xs uppercase tracking-widest text-orange-600 font-bold mb-3">Dados do cliente</p>
+                    <p class="text-sm text-gray-700"><span class="font-semibold">Nome:</span> <span id="profile-name">Visitante</span></p>
+                    <p class="text-sm text-gray-700"><span class="font-semibold">E-mail:</span> <span id="profile-email">-</span></p>
+                    <p class="text-sm text-gray-700"><span class="font-semibold">Pedidos realizados:</span> <span id="profile-orders">0</span></p>
+                </div>
+                <div class="rounded-3xl border border-gray-200 p-5">
+                    <h3 class="font-semibold text-gray-900 mb-2">Atalhos</h3>
+                    <ul class="space-y-3 text-sm text-gray-600">
+                        <li class="flex items-center gap-2"><span class="inline-flex h-2.5 w-2.5 rounded-full bg-orange-600"></span>Pedidos em andamento</li>
+                        <li class="flex items-center gap-2"><span class="inline-flex h-2.5 w-2.5 rounded-full bg-orange-600"></span>Endereço de entrega</li>
+                        <li class="flex items-center gap-2"><span class="inline-flex h-2.5 w-2.5 rounded-full bg-orange-600"></span>Configurações de conta</li>
+                    </ul>
+                </div>
+                <div class="flex flex-col gap-3 sm:flex-row">
+                    <button id="edit-profile" type="button" class="w-full rounded-full bg-orange-600 px-4 py-3 text-sm font-semibold text-white hover:bg-orange-700 transition">Editar perfil</button>
+                    <button id="logout-btn" type="button" class="w-full rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition">Sair</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="product-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm px-4 py-8" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="mx-auto max-w-2xl rounded-[32px] bg-white overflow-hidden modal-card">
+            <div class="flex items-center justify-between border-b border-gray-200 bg-gray-50 p-4">
+                <div>
+                    <h2 id="modal-title" class="text-xl font-bold text-gray-900">Produto</h2>
+                    <p id="modal-price" class="text-sm text-orange-600 mt-1"></p>
+                </div>
+                <button id="modal-close" type="button" class="text-gray-500 hover:text-gray-900">Fechar ✕</button>
+            </div>
+            <div class="grid gap-6 p-6 md:grid-cols-[1.2fr_1fr]">
+                <img id="modal-image" src="" alt="" class="h-64 w-full rounded-3xl object-cover md:h-full" />
+                <div class="space-y-4">
+                    <p id="modal-stock" class="text-sm text-gray-500"></p>
+                    <p id="modal-description" class="text-sm leading-6 text-gray-700"></p>
+                    <div class="flex flex-col gap-3 pt-2">
+                        <a id="modal-buy" href="#" target="_blank" class="inline-flex items-center justify-center rounded-full bg-green-600 px-4 py-3 text-sm font-bold text-white hover:bg-green-700 transition">Comprar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-zinc-900 text-white py-12">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="font-bold mb-4">SOBRE NÓS</h4>
+                <p class="text-sm text-gray-400">Levamos o melhor em móveis para sua casa, com design moderno e qualidade de fábrica.</p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">VEJA A FILIAL MAIS PERTO DE VOCÊ</h4>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li>Ivinhema</li>
+                    <li>Bela Vista</li>
+                    <li>Aquidauana</li>
+                    <li>Porto Murtinho</li>
+                    <li>Jardim</li>
+                    <li>Ponta Porã</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">ATENDIMENTO</h4>
+                <ul class="text-sm text-gray-400 space-y-2">
+                    <li>Dúvidas Frequentes</li>
+                    <li>Políticas de Entrega</li>
+                    <li>Trocas e Devoluções</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">NEWSLETTER</h4>
+                <div class="flex">
+                    <input type="text" placeholder="Seu e-mail" class="bg-zinc-800 border-none p-2 w-full text-sm">
+                    <button class="bg-orange-600 px-4 py-2 font-bold text-sm">OK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="fixed bottom-24 right-6 z-50 flex flex-col items-end gap-3">
+        <div class="group relative inline-flex">
+            <a href="https://www.instagram.com/aquidauanamoveisofc?igsh=MWh5NnY1NWtjZWliZA==" target="_blank" class="flex items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400 p-3 text-white shadow-2xl transition hover:from-fuchsia-600 hover:via-pink-600 hover:to-orange-500 active:scale-95" aria-label="Abrir Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="igGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#F58529"/>
+                            <stop offset="50%" stop-color="#DD2A7B"/>
+                            <stop offset="100%" stop-color="#515BD4"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="12" cy="12" r="10" fill="url(#igGradient)"/>
+                    <path fill="#fff" d="M15.5 7.75a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5z"/>
+                    <path fill="#fff" d="M12 9.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zm0 1.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                    <path fill="#fff" d="M16.75 6.5h-9.5A2.25 2.25 0 0 0 5 8.75v6.5A2.25 2.25 0 0 0 7.25 17.5h9.5A2.25 2.25 0 0 0 19 15.25v-6.5A2.25 2.25 0 0 0 16.75 6.5zm1.5 8.75a1.5 1.5 0 0 1-1.5 1.5h-9.5A1.5 1.5 0 0 1 6 15.25v-6.5A1.5 1.5 0 0 1 7.5 7.25h9.5a1.5 1.5 0 0 1 1.5 1.5v6.5z"/>
+                </svg>
+            </a>
+            <div class="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 mr-3 hidden w-52 rounded-3xl border border-gray-200 bg-white p-4 text-left text-sm text-gray-800 shadow-2xl transition duration-200 group-hover:block">
+                <p class="font-semibold">Nos siga no Instagram</p>
+                <p class="mt-1 text-xs text-gray-500">Clique para abrir nosso perfil e ver novidades.</p>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/556799473285" target="_blank" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full bg-green-600 px-4 py-3 text-white shadow-2xl transition hover:bg-green-700 hover:shadow-green-200 active:scale-95" aria-label="Abrir WhatsApp">
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 2.04C6.48 2.04 2 6.52 2 12.04c0 2.04.6 3.94 1.65 5.55L2 22l4.6-1.2c1.54 1.05 3.42 1.65 5.4 1.65 5.52 0 10-4.48 10-10 0-5.52-4.48-10-10-10zM17.5 15.3c-.2.55-1.18 1.05-1.62 1.12-.42.08-.93.15-2.22-.34-3.53-1.19-5.81-4.15-6-4.34-.19-.2-1.54-1.93-1.54-3.68 0-1.74.93-2.6 1.26-2.95.33-.36.78-.46 1.17-.46.4 0 .8.01 1.14.02.36.01.84-.14 1.3.72.47.87 1.56 3.02 1.7 3.25.14.23.24.5.06.8-.17.29-.25.46-.48.72-.24.26-.5.57-.7.77-.24.25-.48.52-.21.99.27.46 1.19 1.94 2.56 3.13 1.78 1.46 2.6 1.54 3.07 1.44.46-.1 1.49-.61 1.7-1.2.2-.58.2-1.08.14-1.18-.06-.1-.25-.16-.51-.28zM14.52 10.5c-.07-.12-.24-.2-.45-.29-.22-.1-.5-.21-.72-.29-.18-.07-.34-.05-.46.05-.1.1-.4.38-.5.46-.1.08-.17.12-.33.04-.16-.08-.7-.25-1.34-.82-.5-.44-.84-.97-.94-1.14-.1-.16-.01-.25.08-.34.08-.08.18-.2.28-.3.09-.1.12-.18.18-.3.06-.12.03-.22-.01-.31-.05-.1-.46-1.06-.63-1.45-.16-.38-.33-.33-.46-.33l-.4-.01c-.1 0-.25.04-.37.19-.12.14-.5.49-.5 1.2 0 .71.44 1.64.51 1.75.07.1 1.14 1.85 2.77 2.85 1.27.86 1.46.82 1.96.73.5-.09.88-.38.99-.57.12-.19.12-.35.08-.39z"/>
+    </a>
+
+    <script>
+        const modal = document.getElementById('product-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalImage = document.getElementById('modal-image');
+        const modalDescription = document.getElementById('modal-description');
+        const modalPrice = document.getElementById('modal-price');
+        const modalStock = document.getElementById('modal-stock');
+        const buyButton = document.getElementById('modal-buy');
+        const closeButton = document.getElementById('modal-close');
+        const filterToggle = document.getElementById('filter-toggle');
+        const filterPanel = document.getElementById('filter-panel');
+        const filterOverlay = document.getElementById('filter-overlay');
+        const filterClose = document.getElementById('filter-close');
+        const applyFilters = document.getElementById('apply-filters');
+        const clearFilters = document.getElementById('clear-filters');
+        const filterCategories = Array.from(document.querySelectorAll('.filter-category'));
+        const filterPrices = Array.from(document.querySelectorAll('.filter-price'));
+        const profileBtn = document.getElementById('profile-btn');
+        const profileModal = document.getElementById('profile-modal');
+        const profileClose = document.getElementById('profile-close');
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const profileOrders = document.getElementById('profile-orders');
+        const logoutBtn = document.getElementById('logout-btn');
+        let productCards = [];
+        const productsGrid = document.getElementById('products-grid');
+        const bestSellersGrid = document.getElementById('best-sellers-grid');
+
+        function updateFilteredProducts() {
+            const selectedCategories = filterCategories.filter(input => input.checked).map(input => input.value);
+            const selectedPrice = filterPrices.find(input => input.checked)?.value;
+
+            productCards.forEach(card => {
+                const category = card.dataset.category;
+                const price = Number(card.dataset.price);
+                const categoryMatch = !selectedCategories.length || selectedCategories.includes(category);
+                let priceMatch = true;
+
+                if (selectedPrice) {
+                    const [min, max] = selectedPrice.split('-').map(Number);
+                    priceMatch = price >= min && price <= max;
+                }
+
+                card.style.display = categoryMatch && priceMatch ? '' : 'none';
+            });
+        }
+
+        function openFilterDrawer() {
+            filterPanel.classList.remove('translate-x-full');
+            filterOverlay.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeFilterDrawer() {
+            filterPanel.classList.add('translate-x-full');
+            filterOverlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        filterToggle.addEventListener('click', () => {
+            if (filterPanel.classList.contains('translate-x-full')) {
+                openFilterDrawer();
+            } else {
+                closeFilterDrawer();
+            }
+        });
+
+        filterClose.addEventListener('click', closeFilterDrawer);
+        filterOverlay.addEventListener('click', closeFilterDrawer);
+
+        applyFilters.addEventListener('click', () => {
+            updateFilteredProducts();
+            closeFilterDrawer();
+        });
+
+        clearFilters.addEventListener('click', () => {
+            filterCategories.forEach(input => input.checked = false);
+            filterPrices.forEach(input => input.checked = false);
+            updateFilteredProducts();
+        });
+
+        document.querySelectorAll('.filter-category, .filter-price').forEach(input => {
+            input.addEventListener('change', () => updateFilteredProducts());
+        });
+
+        function attachProductDetailEvents() {
+            document.querySelectorAll('.product-detail-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const productName = button.dataset.productName;
+                    modalTitle.textContent = productName;
+                    modalPrice.textContent = button.dataset.productPrice;
+                    modalStock.textContent = `Estoque: ${button.dataset.productStock}`;
+                    modalDescription.textContent = button.dataset.productDescription;
+                    modalImage.src = button.dataset.productImage;
+                    modalImage.alt = productName;
+                    buyButton.href = `https://wa.me/556799473285?text=${encodeURIComponent(`Olá! Quero comprar ${productName}`)}`;
+                    modal.classList.remove('hidden');
+                    document.body.classList.add('overflow-hidden');
+                });
+            });
+        }
+
+        async function loadStoreProducts() {
+            try {
+                const response = await fetch('/api/products');
+                const products = await response.json();
+                renderStoreProducts(products);
+            } catch (error) {
+                console.error('Erro ao carregar produtos:', error);
+            }
+        }
+
+        function renderStoreProducts(products) {
+            productsGrid.innerHTML = products.map(product => {
+                const statusLabel = product.stock > 0 ? 'Disponível' : 'Fora de estoque';
+                const statusClass = product.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700';
+                return `
+                    <article data-category="${product.category}" data-price="${product.price}" class="product-card bg-gray-50 rounded-3xl border border-gray-200 p-5 shadow-sm hover:shadow-lg transition">
+                        <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-44 object-cover rounded-3xl mb-4">
+                        <h3 class="font-semibold text-gray-900">${product.name}</h3>
+                        <p class="text-sm text-gray-500 mb-3">Em estoque: ${product.stock} unidades</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-orange-600">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                            <span class="rounded-full ${statusClass} px-3 py-1 text-[10px] uppercase font-bold">${statusLabel}</span>
+                        </div>
+                        <button type="button" data-product-name="${product.name}" data-product-price="R$ ${product.price.toFixed(2).replace('.', ',')}" data-product-stock="${product.stock} unidades" data-product-description="${product.description}" data-product-image="${product.imageUrl}" class="product-detail-button w-full mt-4 border border-orange-600 text-orange-600 py-2 rounded font-bold text-xs hover:bg-orange-600 hover:text-white transition">VER DETALHES</button>
+                    </article>
+                `;
+            }).join('');
+
+            productCards = Array.from(document.querySelectorAll('.product-card'));
+            attachProductDetailEvents();
+            updateFilteredProducts();
+        }
+
+        function renderBestSellers(products) {
+            const bestSellers = products.slice(0, 4);
+            bestSellersGrid.innerHTML = bestSellers.map(product => {
+                const statusLabel = product.stock > 0 ? 'Disponível' : 'Fora de estoque';
+                const statusClass = product.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700';
+                return `
+                    <article class="best-seller-card group cursor-pointer bg-white border border-transparent hover:border-gray-200 hover:shadow-xl p-4 transition-all duration-300 h-full rounded-3xl">
+                        <div class="relative overflow-hidden mb-4">
+                            <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-44 object-cover group-hover:scale-105 transition duration-500 rounded-3xl">
+                            <div class="absolute top-2 left-2 ${statusClass} text-[10px] font-bold px-2 py-1 uppercase">${statusLabel}</div>
+                        </div>
+                        <h3 class="text-sm font-medium h-10 overflow-hidden">${product.name}</h3>
+                        <div class="mt-4">
+                            <div class="flex items-baseline space-x-1">
+                                <span class="text-lg font-bold text-orange-600">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                            </div>
+                            <p class="text-[10px] text-gray-500">Estoque: ${product.stock} unidade${product.stock === 1 ? '' : 's'}</p>
+                        </div>
+                        <button type="button" data-product-name="${product.name}" data-product-price="R$ ${product.price.toFixed(2).replace('.', ',')}" data-product-stock="${product.stock} unidades" data-product-description="${product.description}" data-product-image="${product.imageUrl}" class="product-detail-button w-full mt-4 border border-orange-600 text-orange-600 py-2 rounded font-bold text-xs hover:bg-orange-600 hover:text-white transition">VER DETALHES</button>
+                    </article>
+                `;
+            }).join('');
+
+            attachProductDetailEvents();
+        }
+
+        async function loadStoreProducts() {
+            try {
+                const response = await fetch('/api/products');
+                const products = await response.json();
+                renderStoreProducts(products);
+                renderBestSellers(products);
+            } catch (error) {
+                console.error('Erro ao carregar produtos:', error);
+            }
+        }
+
+        loadStoreProducts();
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        closeButton.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', event => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        function openProfileModal() {
+            profileModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeProfileModal() {
+            profileModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function updateProfileState(customer) {
+            if (customer && customer.name) {
+                profileBtn.classList.remove('hidden');
+                document.getElementById('login-btn').classList.add('hidden');
+                profileName.textContent = customer.name;
+                profileEmail.textContent = customer.email || '-';
+                profileOrders.textContent = customer.orders || '0';
+            } else {
+                profileBtn.classList.add('hidden');
+                document.getElementById('login-btn').classList.remove('hidden');
+                profileName.textContent = 'Visitante';
+                profileEmail.textContent = '-';
+                profileOrders.textContent = '0';
+            }
+        }
+
+        const loginModal = document.getElementById('login-modal');
+        const loginBtn = document.getElementById('login-btn');
+        const loginClose = document.getElementById('login-close');
+        const loginTabButtons = document.querySelectorAll('.login-tab-btn');
+        const loginTabContents = document.querySelectorAll('.login-tab-content');
+        const showRegisterBtn = document.getElementById('show-register');
+        const showLoginBtn = document.getElementById('show-login');
+        const customerTab = document.getElementById('customer-tab');
+        const registerTab = document.getElementById('register-tab');
+
+        function openLoginModal() {
+            loginModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeLoginModal() {
+            loginModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function switchLoginTab(tabName) {
+            loginTabContents.forEach(content => content.classList.remove('active'));
+            loginTabButtons.forEach(btn => btn.classList.remove('active'));
+
+            if (tabName === 'customer') {
+                customerTab.classList.add('active');
+                document.querySelector('[data-tab=\"customer\"]').classList.add('active');
+                registerTab.classList.remove('active');
+            } else if (tabName === 'admin') {
+                document.getElementById('admin-tab').classList.add('active');
+                document.querySelector('[data-tab=\"admin\"]').classList.add('active');
+                customerTab.classList.remove('active');
+                registerTab.classList.remove('active');
+            }
+        }
+
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openLoginModal();
+        });
+
+        loginClose.addEventListener('click', closeLoginModal);
+
+        loginModal.addEventListener('click', event => {
+            if (event.target === loginModal) {
+                closeLoginModal();
+            }
+        });
+
+        profileBtn?.addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('customerToken'));
+            if (user && user.name) {
+                updateProfileState(user);
+                openProfileModal();
+            } else {
+                openLoginModal();
+            }
+        });
+
+        profileClose?.addEventListener('click', closeProfileModal);
+        profileModal?.addEventListener('click', event => {
+            if (event.target === profileModal) {
+                closeProfileModal();
+            }
+        });
+
+        updateProfileState(JSON.parse(localStorage.getItem('customerToken')));
+
+        logoutBtn?.addEventListener('click', () => {
+            localStorage.removeItem('customerToken');
+            updateProfileState(null);
+            closeProfileModal();
+            alert('Você saiu da conta.');
+        });
+
+        loginTabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchLoginTab(btn.dataset.tab);
+            });
+        });
+
+        showRegisterBtn.addEventListener('click', () => {
+            customerTab.classList.remove('active');
+            registerTab.classList.add('active');
+            document.querySelector('[data-tab=\"customer\"]').classList.remove('active');
+        });
+
+        showLoginBtn.addEventListener('click', () => {
+            customerTab.classList.add('active');
+            registerTab.classList.remove('active');
+            document.querySelector('[data-tab=\"customer\"]').classList.add('active');
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !loginModal.classList.contains('hidden')) {
+                closeLoginModal();
+            }
+        });
+
+        // VALIDAÇÃO DE FORMULÁRIOS
+        function showValidationError(input, message) {
+            input.classList.add('border-red-500', 'focus:ring-red-600');
+            let errorDiv = input.nextElementSibling;
+            if (!errorDiv || !errorDiv.classList.contains('error-message')) {
+                errorDiv = document.createElement('p');
+                errorDiv.className = 'error-message text-red-600 text-sm mt-1';
+                input.parentNode.appendChild(errorDiv);
+            }
+            errorDiv.textContent = message;
+        }
+
+        function clearValidationError(input) {
+            input.classList.remove('border-red-500', 'focus:ring-red-600');
+            let errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('error-message')) {
+                errorDiv.remove();
+            }
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+
+        // VALIDAÇÃO CLIENTE LOGIN
+        const customerLoginBtn = document.querySelector('#customer-tab button');
+        customerLoginBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('customer-email');
+            const password = document.getElementById('customer-password');
+            let isValid = true;
+
+            if (!email.value.trim()) {
+                showValidationError(email, 'E-mail é obrigatório');
+                isValid = false;
+            } else if (!validateEmail(email.value)) {
+                showValidationError(email, 'E-mail inválido');
+                isValid = false;
+            } else {
+                clearValidationError(email);
+            }
+
+            if (!password.value.trim()) {
+                showValidationError(password, 'Senha é obrigatória');
+                isValid = false;
+            } else if (!validatePassword(password.value)) {
+                showValidationError(password, 'Senha deve ter mínimo 6 caracteres');
+                isValid = false;
+            } else {
+                clearValidationError(password);
+            }
+
+            if (isValid) {
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email.value, password: password.value })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        alert(`Login efetuado com sucesso!\nBem-vindo ${data.customer.name}!`);
+                        localStorage.setItem('customerToken', JSON.stringify(data.customer));
+                        updateProfileState(data.customer);
+                        closeLoginModal();
+                        email.value = '';
+                        password.value = '';
+                    } else {
+                        showValidationError(email, data.error || 'Erro ao fazer login');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    showValidationError(email, 'Erro ao conectar com o servidor');
+                }
+            }
+        });
+
+        // VALIDAÇÃO CADASTRO
+        const registerBtn = document.querySelector('#register-tab button');
+        registerBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('register-name');
+            const email = document.getElementById('register-email');
+            const password = document.getElementById('register-password');
+            const confirmPassword = document.getElementById('register-password-confirm');
+            let isValid = true;
+
+            if (!name.value.trim()) {
+                showValidationError(name, 'Nome é obrigatório');
+                isValid = false;
+            } else if (name.value.trim().length < 3) {
+                showValidationError(name, 'Nome deve ter mínimo 3 caracteres');
+                isValid = false;
+            } else {
+                clearValidationError(name);
+            }
+
+            if (!email.value.trim()) {
+                showValidationError(email, 'E-mail é obrigatório');
+                isValid = false;
+            } else if (!validateEmail(email.value)) {
+                showValidationError(email, 'E-mail inválido');
+                isValid = false;
+            } else {
+                clearValidationError(email);
+            }
+
+            if (!password.value.trim()) {
+                showValidationError(password, 'Senha é obrigatória');
+                isValid = false;
+            } else if (!validatePassword(password.value)) {
+                showValidationError(password, 'Senha deve ter mínimo 6 caracteres');
+                isValid = false;
+            } else {
+                clearValidationError(password);
+            }
+
+            if (!confirmPassword.value.trim()) {
+                showValidationError(confirmPassword, 'Confirmação de senha é obrigatória');
+                isValid = false;
+            } else if (password.value !== confirmPassword.value) {
+                showValidationError(confirmPassword, 'Senhas não correspondem');
+                isValid = false;
+            } else {
+                clearValidationError(confirmPassword);
+            }
+
+            if (isValid) {
+                try {
+                    const response = await fetch('/api/auth/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            name: name.value, 
+                            email: email.value, 
+                            password: password.value 
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        alert(`Cadastro efetuado com sucesso!\nBem-vindo ${name.value}!`);
+                        name.value = '';
+                        email.value = '';
+                        password.value = '';
+                        confirmPassword.value = '';
+                        switchLoginTab('customer');
+                    } else {
+                        showValidationError(email, data.error || 'Erro ao cadastrar');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    showValidationError(email, 'Erro ao conectar com o servidor');
+                }
+            }
+        });
+
+        // VALIDAÇÃO ADMIN LOGIN
+        const adminBtn = document.querySelector('#admin-tab button');
+        adminBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const cpf = document.getElementById('admin-cpf');
+            const password = document.getElementById('admin-password');
+            let isValid = true;
+
+            if (!cpf.value.trim()) {
+                showValidationError(cpf, 'CPF/CNPJ é obrigatório');
+                isValid = false;
+            } else {
+                clearValidationError(cpf);
+            }
+
+            if (!password.value.trim()) {
+                showValidationError(password, 'Senha é obrigatória');
+                isValid = false;
+            } else if (!validatePassword(password.value)) {
+                showValidationError(password, 'Senha deve ter mínimo 6 caracteres');
+                isValid = false;
+            } else {
+                clearValidationError(password);
+            }
+
+            if (isValid) {
+                try {
+                    const response = await fetch('/api/auth/admin/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ cpf: cpf.value, password: password.value })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        alert('Login administrativo efetuado com sucesso!');
+                        localStorage.setItem('adminToken', JSON.stringify(data.admin));
+                        window.location.href = 'admin.html';
+                    } else {
+                        showValidationError(cpf, data.error || 'Erro ao fazer login');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    showValidationError(cpf, 'Erro ao conectar com o servidor');
+                }
+            }
+        });
+
+        // Limpar erros quando usuário começa a digitar
+        [document.getElementById('customer-email'), document.getElementById('customer-password'),
+         document.getElementById('register-name'), document.getElementById('register-email'),
+         document.getElementById('register-password'), document.getElementById('register-password-confirm'),
+         document.getElementById('admin-cpf'), document.getElementById('admin-password')
+        ].forEach(input => {
+            input.addEventListener('focus', () => {
+                clearValidationError(input);
+            });
+        });
+    </script>
+
+</body>
+</html>
